@@ -1,24 +1,22 @@
 import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import { Card } from './components/Card'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<unknown[] | null>(null)
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch('https://example.com/user')
       const json = await response.json()
-      console.log('json', json)
       setData(json)
     }
 
     fetchData()
   }, [])
-
-  console.log('data', data)
 
   return (
     <>
@@ -42,6 +40,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      
+      {(data?.length ?? 0) > 0 && data!.map(user => (
+        // @ts-ignore
+        <Card key={user!.firstName} firstName={user!.firstName} lastName={user!.lastName} />
+      ))}
     </>
   )
 }

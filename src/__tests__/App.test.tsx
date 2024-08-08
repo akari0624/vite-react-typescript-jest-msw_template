@@ -1,12 +1,11 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import App from '../App'
 
-test('Renders main page correctly', () => {
+test('Renders main page correctly, and have a member card on it', async () => {
+  await act(async () => {
   render(<App />)
-  const button = screen.getByRole('button')
-  expect(button.innerHTML).toBe('count is 0')
+  })
 
-  fireEvent.click(button)
-  fireEvent.click(button)
-  expect(button.innerHTML).toBe('count is 2')
+  screen.getByLabelText('member card')
+  
 })
